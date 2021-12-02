@@ -5,7 +5,11 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 
 import { uiCloseModal } from "../../actions/ui";
-import { eventAddNew, eventClearActiveEvent } from "../../actions/events";
+import {
+  eventAddNew,
+  eventClearActiveEvent,
+  eventUpdated,
+} from "../../actions/events";
 import DateTimePicker from "react-datetime-picker";
 import Modal from "react-modal";
 
@@ -47,6 +51,8 @@ const CalendarModal = () => {
   useEffect(() => {
     if (activeEvent) {
       setFormValues(activeEvent);
+    } else {
+      setFormValues(initEvent);
     }
   }, [activeEvent]);
 
@@ -97,16 +103,20 @@ const CalendarModal = () => {
       return setTitleValid(false);
     }
 
-    dispatch(
-      eventAddNew({
-        ...formValues,
-        id: new Date().getTime(),
-        user: {
-          _id: "123",
-          name: "Martin",
-        },
-      })
-    );
+    if (activeEvent) {
+      dispatch(eventUpdated(formValues));
+    } else {
+      dispatch(
+        eventAddNew({
+          ...formValues,
+          id: new Date().getTime(),
+          user: {
+            _id: "123",
+            name: "Martin",
+          },
+        })
+      );
+    }
 
     setTitleValid(true);
     closeModal();
@@ -121,7 +131,7 @@ const CalendarModal = () => {
       className="modal"
       overlayClassName="modal-fondo"
     >
-      <h1> Nuevo evento </h1>
+      <h1> {activeEvent ? "Editar Evento" : "Nuevo evento"} </h1>
       <hr />
       <form onSubmit={handleSubmitForm} className="container">
         <div className="form-group">
