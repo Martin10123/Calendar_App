@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { uiCloseModal } from "../../actions/ui";
 import {
-  eventAddNew,
   eventClearActiveEvent,
+  eventStartAddNew,
   eventUpdated,
 } from "../../actions/events";
 import DateTimePicker from "react-datetime-picker";
@@ -106,16 +106,7 @@ const CalendarModal = () => {
     if (activeEvent) {
       dispatch(eventUpdated(formValues));
     } else {
-      dispatch(
-        eventAddNew({
-          ...formValues,
-          id: new Date().getTime(),
-          user: {
-            _id: "123",
-            name: "Martin",
-          },
-        })
-      );
+      dispatch(eventStartAddNew(formValues));
     }
 
     setTitleValid(true);
