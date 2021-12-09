@@ -23,4 +23,4 @@
 
 ## Link donde esta alojada la pagina 🤠
 
-- La pagina se encuentra alojada en [Aqui](https://calendar-backend-martin.herokuapp.com/login)
+- La pagina se encuentra alojada en [Aqui](https://calendar-backend-martin.herokuapp.com)
