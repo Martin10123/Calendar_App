@@ -19,7 +19,7 @@
 
 ## Autores ✒️
 
-- Martin Elias
+- Martin Elias - Estudiante de programación
 
 ## Link donde esta alojada la pagina 🤠
 
