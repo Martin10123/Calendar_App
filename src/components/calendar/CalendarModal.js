@@ -8,7 +8,7 @@ import { uiCloseModal } from "../../actions/ui";
 import {
   eventClearActiveEvent,
   eventStartAddNew,
-  eventUpdated,
+  eventStartUpdate,
 } from "../../actions/events";
 import DateTimePicker from "react-datetime-picker";
 import Modal from "react-modal";
@@ -104,7 +104,7 @@ const CalendarModal = () => {
     }
 
     if (activeEvent) {
-      dispatch(eventUpdated(formValues));
+      dispatch(eventStartUpdate(formValues));
     } else {
       dispatch(eventStartAddNew(formValues));
     }

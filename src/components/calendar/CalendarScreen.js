@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
 import { uiOpenModal } from "../../actions/ui";
-import { eventClearActiveEvent, eventSetActive } from "../../actions/events";
+import {
+  eventClearActiveEvent,
+  eventSetActive,
+  eventStartLoading,
+} from "../../actions/events";
 import Navbar from "../ui/Navbar";
 import CalendarEvent from "./CalendarEvent";
 import messages from "../../helpers/calendar-message-es";
@@ -18,27 +22,19 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const localizer = momentLocalizer(moment);
 
-// const events = [
-//   {
-//     title: "Cumpleaños de mis amigos",
-//     start: moment().toDate(),
-//     end: moment().add(2, "hours").toDate(),
-//     bgColor: "#fafafa",
-//     user: {
-//       _id: "123",
-//       name: "Martin",
-//     },
-//   },
-// ];
-
 const CalendarScreen = () => {
   const dispatch = useDispatch();
 
   const { events, activeEvent } = useSelector((state) => state.calendar);
+  const { uid } = useSelector((state) => state.auth);
 
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "month"
   );
+
+  useEffect(() => {
+    dispatch(eventStartLoading());
+  }, [dispatch]);
 
   const onDoubleClick = (e) => {
     dispatch(uiOpenModal());
@@ -59,7 +55,7 @@ const CalendarScreen = () => {
 
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
-      backgroundColor: "#367CF7",
+      backgroundColor: uid === event.user._id ? "#367CF7" : "#808080",
       borderRadius: "0px",
       opacity: 0.8,
       display: "block",
